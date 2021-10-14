@@ -19,6 +19,15 @@ const formValid = ({ formErrors, ...rest }) => {
 };
 
 
+const fieldValid = (obj) => {
+  let valid = true;
+  Object.values(obj).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+  return valid;
+};
+
+
 
 class Register extends Component {
 
@@ -99,34 +108,46 @@ class Register extends Component {
         password: this.state.password2,
       };
 
-      BaseService.postany('/user/sign_up/', obj)
-        .then(res => {
-          if(res.data) {
-            if (res.data["status"]===100) {
-              alertify.success(" User Register successful !");
-              this.props.history.push('/login');
-              this.setState({
-                name: '',
-                profile_pic:'',
-                email:'',
-                index_no:'',
-                role_key:'',
-                password1:'',
-                password2:'',
-              })
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: res.data["message"]
-              })
-              // alertify.alert(res.data["message"]);
+      if (fieldValid(obj)){
+        BaseService.postany('/user/sign_up/', obj)
+          .then(res => {
+            if(res.data) {
+              if (res.data["status"]===100) {
+                alertify.success(" User Register successful !");
+                this.props.history.push('/login');
+                this.setState({
+                  name: '',
+                  profile_pic:'',
+                  email:'',
+                  index_no:'',
+                  role_key:'',
+                  password1:'',
+                  password2:'',
+                })
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: res.data["message"]
+                })
+                // alertify.alert(res.data["message"]);
+              }
             }
-          }
-          this.setState({
-            spinner:false
-          });
+            this.setState({
+              spinner:false
+            });
+          })
+      }
+      else{
+        this.setState({
+          spinner:false
+        });
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: "Please Fill All The Fields properly !"
         })
+      }
 
 
 
