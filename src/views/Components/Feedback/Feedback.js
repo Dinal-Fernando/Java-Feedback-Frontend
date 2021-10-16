@@ -111,6 +111,181 @@ class Feedback extends Component {
         <br/>
         <br/>
 
+        <div className={this.state.spinner ? 'parentDisable' : ''} width="100%">
+          <div className='overlay-box'>
+            <ClipLoader
+              size={150}
+              color={"#123abc"}
+              loading={this.state.spinner}
+            />
+          </div>
+        </div>
+
+        <Row>
+          <Col xs="12" sm="12" lg="6">
+
+            <Card>
+              <CardHeader>
+                <i className="fa fa-align-justify"></i> Header Lines, Class Lines, Function Lines, Variables, Data Types and Values
+              </CardHeader>
+              <CardBody>
+                {/*##################################### Header Lines ##############################################*/}
+                {header_lines.length>0?(
+
+                  <div>
+                    <h5>Header Lines</h5>
+                    {
+                      header_lines.map((line,index)=>(
+                        <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
+                      ))
+                    }
+                  </div>
+
+                ):null
+                }
+
+                <hr style={{color: "#000", backgroundColor:"#000", height: 1, opacity:"40%"}}/>
+
+                {/*##################################### Class Lines ##############################################*/}
+                {class_lines.length>0?(
+
+                  <div>
+                    <h5>Class</h5>
+                    {
+                      class_lines.map((line,index)=>(
+                        <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
+                      ))
+                    }
+
+
+                  </div>
+
+                ):null
+                }
+
+
+                <hr style={{color: "#000", backgroundColor:"#000", height: 1, opacity:"40%"}}/>
+
+                {/*##################################### Function Lines ##############################################*/}
+
+                {function_lines.length>0?(
+
+                  <div>
+                    <h5>Function</h5>
+                    {
+                      function_lines.map((line,index)=>(
+                        <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
+                      ))
+                    }
+
+
+                  </div>
+
+                ):null
+                }
+
+                <hr style={{color: "#000", backgroundColor:"#000", height: 1, opacity:"40%"}}/>
+
+                {/*##################################### Variables with Data Types ##############################################*/}
+
+                {variables_and_types.length>0?(
+
+                  <div>
+                    <h5>Variables And Data Types</h5>
+
+                    {variables_and_types.length>0?(
+                      <Table responsive>
+                        <thead>
+                        <tr>
+                          <th>Variable</th>
+                          <th>Data Type</th>
+                        </tr>
+                        </thead>
+                        {variables_and_types.map(type => (
+                          <tbody>
+                          <tr>
+                            <td> {type.var} </td>
+                            <td>{type.d_type}</td>
+                          </tr>
+                          </tbody>
+                        ))}
+                      </Table>
+                    ):null
+                    }
+                  </div>
+
+                ):null
+                }
+
+                <hr style={{color: "#000", backgroundColor:"#000", height: 1, opacity:"40%"}}/>
+                {/*##################################### Variables with Values ##############################################*/}
+
+                {variables_and_values.length>0?(
+
+                  <div>
+                    <h5>Variables And values</h5>
+
+                    {variables_and_values.length>0?(
+                      <Table responsive>
+                        <thead>
+                        <tr>
+                          <th>Variable</th>
+                          <th>Value</th>
+                        </tr>
+                        </thead>
+                        {variables_and_values.map(value => (
+                          <tbody>
+                          <tr>
+                            <td> {value.var} </td>
+                            <td>{value.value}</td>
+                          </tr>
+                          </tbody>
+                        ))}
+                      </Table>
+                    ):null
+                    }
+                  </div>
+
+                ):null
+                }
+
+              </CardBody>
+            </Card>
+
+          </Col>
+
+          <Col xs="12" sm="12" lg="6">
+
+            <Card>
+              <CardHeader>
+                <i className="fa fa-align-justify"></i> Main Function
+              </CardHeader>
+              <CardBody>
+
+                {/*##################################### Main Function Statements ##############################################*/}
+
+                {main_func_lines.length>0?(
+
+                  <div>
+                    <h4>Main Function Statements</h4>
+                    {
+                      main_func_lines.map((line,index)=>(
+                        <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
+                      ))
+                    }
+
+
+                  </div>
+
+                ):null
+                }
+
+              </CardBody>
+            </Card>
+
+          </Col>
+        </Row>
+
 
         <Card>
           <CardHeader>
@@ -118,206 +293,72 @@ class Feedback extends Component {
           </CardHeader>
           <CardBody>
 
-            <div className={this.state.spinner ? 'parentDisable' : ''} width="100%">
-              <div className='overlay-box'>
-                <ClipLoader
-                  size={150}
-                  color={"#123abc"}
-                  loading={this.state.spinner}
-                />
+            {class_feedback.length>0?(
+              <div>
+              <h5>Class Feedback</h5>
+              <Table responsive>
+                <thead>
+                <tr>
+                  <th>Line</th>
+                  <th>Error</th>
+                </tr>
+                </thead>
+                {class_feedback.map(feedback => (
+                  <tbody>
+                  <tr>
+                    <td> {feedback.line} </td>
+                    <td>{feedback.error}</td>
+                  </tr>
+                  </tbody>
+                ))}
+              </Table>
               </div>
-            </div>
-
-            {/*##################################### Header Lines ##############################################*/}
-            {header_lines.length>0?(
-
-                <div>
-                  <h4>Header Lines</h4>
-                  {
-                    header_lines.map((line,index)=>(
-                      <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
-                    ))
-                  }
-                </div>
-
-              ):null
-            }
-
-            <hr style={{color: "#000", backgroundColor:"#000", height: 1}}/>
-
-            {/*##################################### Class Lines ##############################################*/}
-                {class_lines.length>0?(
-
-                  <div>
-                    <h4>Class</h4>
-                    {
-                      class_lines.map((line,index)=>(
-                        <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
-                      ))
-                    }
-
-                    {class_feedback.length>0?(
-                      <Table responsive>
-                        <thead>
-                        <tr>
-                          <th>Line</th>
-                          <th>Error</th>
-                        </tr>
-                        </thead>
-                        {class_feedback.map(feedback => (
-                          <tbody>
-                          <tr>
-                            <td> {feedback.line} </td>
-                            <td>{feedback.error}</td>
-                          </tr>
-                          </tbody>
-                        ))}
-                      </Table>
-                    ):null
-                    }
-              </div>
-
             ):null
             }
 
-
-            <hr style={{color: "#000", backgroundColor:"#000", height: 1}}/>
-
-            {/*##################################### Function Lines ##############################################*/}
-
-            {function_lines.length>0?(
-
+            {function_feedback.length>0?(
               <div>
-                <h4>Function</h4>
-                {
-                  function_lines.map((line,index)=>(
-                    <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
-                  ))
-                }
-
-                {function_feedback.length>0?(
-                  <Table responsive>
-                    <thead>
-                    <tr>
-                      <th>Line</th>
-                      <th>Error</th>
-                    </tr>
-                    </thead>
-                    {function_feedback.map(feedback => (
-                      <tbody>
-                      <tr>
-                        <td> {feedback.line} </td>
-                        <td>{feedback.error}</td>
-                      </tr>
-                      </tbody>
-                    ))}
-                  </Table>
-                ):null
-                }
+              <h5>Function Feedback</h5>
+              <Table responsive>
+                <thead>
+                <tr>
+                  <th>Line</th>
+                  <th>Error</th>
+                </tr>
+                </thead>
+                {function_feedback.map(feedback => (
+                  <tbody>
+                  <tr>
+                    <td> {feedback.line} </td>
+                    <td>{feedback.error}</td>
+                  </tr>
+                  </tbody>
+                ))}
+              </Table>
               </div>
-
             ):null
             }
 
-            <hr style={{color: "#000", backgroundColor:"#000", height: 1}}/>
-
-            {/*##################################### Main Function Statements ##############################################*/}
-
-            {main_func_lines.length>0?(
-
+            {main_func_feedback.length>0?(
               <div>
-                <h4>Main Function Statements</h4>
-                {
-                  main_func_lines.map((line,index)=>(
-                    <p><span style={{fontWeight:"bold"}}>{index}</span><span> </span>{line}</p>
-                  ))
-                }
-
-                {main_func_feedback.length>0?(
-                  <Table responsive>
-                    <thead>
-                    <tr>
-                      <th>Line</th>
-                      <th>Error</th>
-                    </tr>
-                    </thead>
-                    {main_func_feedback.map(feedback => (
-                      <tbody>
-                      <tr>
-                        <td> {feedback.line} </td>
-                        <td>{feedback.error}</td>
-                      </tr>
-                      </tbody>
-                    ))}
-                  </Table>
-                ):null
-                }
+                <h4>Main function Feedback</h4>
+              <Table responsive>
+                <thead>
+                <tr>
+                  <th>Line</th>
+                  <th>Error</th>
+                </tr>
+                </thead>
+                {main_func_feedback.map(feedback => (
+                  <tbody>
+                  <tr>
+                    <td> {feedback.line} </td>
+                    <td>{feedback.error}</td>
+                  </tr>
+                  </tbody>
+                ))}
+              </Table>
               </div>
-
-            ):null
-            }
-
-            <hr style={{color: "#000", backgroundColor:"#000", height: 1}}/>
-            {/*##################################### Variables with Data Types ##############################################*/}
-
-            {variables_and_types.length>0?(
-
-              <div>
-                <h4>Variables And Data Types</h4>
-
-                {variables_and_types.length>0?(
-                  <Table responsive>
-                    <thead>
-                    <tr>
-                      <th>Variable</th>
-                      <th>Data Type</th>
-                    </tr>
-                    </thead>
-                    {variables_and_types.map(type => (
-                      <tbody>
-                      <tr>
-                        <td> {type.var} </td>
-                        <td>{type.d_type}</td>
-                      </tr>
-                      </tbody>
-                    ))}
-                  </Table>
-                ):null
-                }
-              </div>
-
-            ):null
-            }
-
-            <hr style={{color: "#000", backgroundColor:"#000", height: 1}}/>
-            {/*##################################### Variables with Values ##############################################*/}
-
-            {variables_and_values.length>0?(
-
-              <div>
-                <h4>Variables And values</h4>
-
-                {variables_and_values.length>0?(
-                  <Table responsive>
-                    <thead>
-                    <tr>
-                      <th>Variable</th>
-                      <th>Value</th>
-                    </tr>
-                    </thead>
-                    {variables_and_values.map(value => (
-                      <tbody>
-                      <tr>
-                        <td> {value.var} </td>
-                        <td>{value.value}</td>
-                      </tr>
-                      </tbody>
-                    ))}
-                  </Table>
-                ):null
-                }
-              </div>
-
             ):null
             }
 

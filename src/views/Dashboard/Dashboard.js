@@ -30,6 +30,7 @@ class Dashboard extends Component {
       name:localStorage.getItem("Name"),
       is_student:localStorage.getItem("IsStudent"),
       pro_pic:localStorage.getItem("ProfilePic"),
+      index_no:localStorage.getItem("Index"),
       code:"// Add Your Code",
     };
 
@@ -135,6 +136,7 @@ class Dashboard extends Component {
                       {this.state.is_student==="1" && (
                         <div className="h5 mt-4">
                           <i className="ni business_briefcase-24 mr-2" />Student
+                          <i className="ni business_briefcase-24 mr-2" />{this.state.index_no}
                         </div>
                       )}
                       {this.state.is_student==="0" && (

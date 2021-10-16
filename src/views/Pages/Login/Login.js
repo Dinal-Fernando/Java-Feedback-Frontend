@@ -111,6 +111,7 @@ class Login extends Component {
               localStorage.setItem("Name", res.data["data"]["name"]);
               localStorage.setItem("ProfilePic", res.data["data"]["logo_url"]);
               localStorage.setItem("IsStudent", res.data["data"]["is_student"]);
+              localStorage.setItem("Index", res.data["data"]["index_no"]);
               this.props.history.push('/profile');
               this.setState({
                 fields:{

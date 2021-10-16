@@ -22,7 +22,7 @@ const formValid = ({ formErrors, ...rest }) => {
 const fieldValid = (obj) => {
   let valid = true;
   Object.values(obj).forEach(val => {
-    val.length > 0 && (valid = false);
+    val.length === 0 && (valid = false);
   });
   return valid;
 };
@@ -108,7 +108,17 @@ class Register extends Component {
         password: this.state.password2,
       };
 
-      if (fieldValid(obj)){
+      const check_obj={
+        name: this.state.name,
+        pro_pic:[this.state.profile_pic],
+        email: this.state.email,
+        role_key:this.state.role_key,
+        password: this.state.password2,
+      };
+
+
+
+      if (fieldValid(check_obj)){
         BaseService.postany('/user/sign_up/', obj)
           .then(res => {
             if(res.data) {
