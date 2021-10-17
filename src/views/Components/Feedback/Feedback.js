@@ -24,6 +24,7 @@ import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/FadeLoader";
 import Widget02 from './Widget02';
 import Swal from "sweetalert2";
+import { savior } from 'savior.js';
 
 
 const emailRegex = RegExp(
@@ -49,6 +50,7 @@ class Feedback extends Component {
     this.state={
       spinner:false,
       code:"",
+      pdf:"",
       header_lines:[],
       class_lines:[],
       class_feedback:[],
@@ -61,6 +63,17 @@ class Feedback extends Component {
     }
 
   }
+
+  downloadPDF=() =>{
+  const linkSource = this.state.pdf;
+  const downloadLink = document.createElement("a");
+  const fileName = "feedback_report.pdf";
+
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+};
+
 
   componentDidMount() {
     BaseService.get('/user/get_feedback/')
@@ -94,19 +107,49 @@ class Feedback extends Component {
           alertify.alert("Cannot load");
         }
       );
+
+
+    BaseService.get('/user/pdf/')
+      .then(res => {
+          if (res.data && res) {
+            if (res.data["status"]===100) {
+              alertify.success("Load Successful !");
+
+              this.setState({
+                pdf:res.data["data"]
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: res.data["message"]
+              })
+              // alertify.alert(res.data["message"]);
+            }
+          }
+        }, err => {
+          alertify.alert("Cannot load");
+        }
+      );
+
+
+
   };
-
-
-
 
   render() {
 
-    const {code,header_lines,class_lines,class_feedback,function_lines,function_feedback,main_func_lines,main_func_feedback,variables_and_types,variables_and_values} = this.state;
+    const {pdf,code,header_lines,class_lines,class_feedback,function_lines,function_feedback,main_func_lines,main_func_feedback,variables_and_types,variables_and_values} = this.state;
 
     return (
       <div className="animated fadeIn">
 
         <button type="button" className="btn btn-outline-primary" onClick={(e) => this.props.history.push('/profile')}>Add Sourcecode</button>
+
+        <br/>
+        <br/>
+        <button type="button" className="btn btn-outline-primary" onClick={(e) => this.downloadPDF()}>Download Report</button>
+
+        {/*<button type="button" className="btn btn-outline-primary" onClick={() => this.openBase64NewTab()}>Download</button>*/}
 
         <br/>
         <br/>
